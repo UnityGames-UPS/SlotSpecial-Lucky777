@@ -86,14 +86,8 @@ public class SlotBehaviour : MonoBehaviour
     [SerializeField]
     private UIManager uiManager;
 
-
-    [Header("Free Spins Board")]
     [SerializeField]
-    private GameObject FSBoard_Object;
-    [SerializeField]
-    private TMP_Text FSnum_text;
-
-    int tweenHeight = 0;  //calculate the height at which tweening is done
+    private int tweenHeight = 155;  //calculate the height at which tweening is done
 
     [SerializeField]
     private GameObject Image_Prefab;    //icons prefab
@@ -164,9 +158,7 @@ public class SlotBehaviour : MonoBehaviour
         if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.RemoveAllListeners();
         if (AutoSpinStop_Button) AutoSpinStop_Button.onClick.AddListener(StopAutoSpin);
 
-        if (FSBoard_Object) FSBoard_Object.SetActive(false);
-
-        tweenHeight = (9 * IconSizeFactor) - 280;
+        tweenHeight = (9 * tweenHeight) - 280;
         Debug.Log(tweenHeight);
     }
 
