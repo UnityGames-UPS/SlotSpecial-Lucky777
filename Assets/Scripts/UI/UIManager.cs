@@ -368,19 +368,21 @@ public class UIManager : MonoBehaviour
 
     private void PopulateSymbolsPayout(Paylines paylines)
     {
+        double multiplyer = socketManager.initialData.bets[slotManager.BetCounter];
+        //double multiplyer = 1;
         jackpot_text.text = socketManager.initPaydata.features.jackpotMultiplier.ToString() + "X";
-        SymbolsText[0].text = socketManager.initUIData.paylines.symbols[0].payout.ToString() + "X";
-        SymbolsText[1].text = socketManager.initUIData.paylines.symbols[1].payout + "X";
-        SymbolsText[2].text = socketManager.initUIData.paylines.symbols[2].payout + "X";
-        SymbolsText[3].text = socketManager.initUIData.paylines.symbols[3].payout + "X";
-        SymbolsText[4].text = socketManager.initUIData.paylines.symbols[4].payout + "X";
-        SymbolsText[5].text = socketManager.initUIData.paylines.symbols[5].payout + "X";
-        SymbolsText[6].text = socketManager.initUIData.paylines.symbols[6].payout + "X";
-        SymbolsText[7].text = socketManager.initPaydata.features.anyPayout.seven + "X";
-        SymbolsText[8].text = socketManager.initPaydata.features.anyPayout.orange + "X";
-        SymbolsText[9].text = socketManager.initPaydata.features.anyPayout.gray + "X";
-        SymbolsText[10].text = socketManager.initPaydata.features.anyPayout.blue + "X";
-        SymbolsText[11].text = socketManager.initPaydata.features.anyPayout.bar + "X";
+        SymbolsText[0].text = (socketManager.initUIData.paylines.symbols[0].payout * multiplyer).ToString() + "X";
+        SymbolsText[1].text = (socketManager.initUIData.paylines.symbols[1].payout * multiplyer).ToString() + "X";
+        SymbolsText[2].text = (socketManager.initUIData.paylines.symbols[2].payout * multiplyer).ToString() + "X";
+        SymbolsText[3].text = (socketManager.initUIData.paylines.symbols[3].payout * multiplyer).ToString() + "X";
+        SymbolsText[4].text = (socketManager.initUIData.paylines.symbols[4].payout * multiplyer).ToString() + "X";
+        SymbolsText[5].text = (socketManager.initUIData.paylines.symbols[5].payout * multiplyer).ToString() + "X";
+        SymbolsText[6].text = (socketManager.initUIData.paylines.symbols[6].payout * multiplyer).ToString() + "X";
+        SymbolsText[7].text = (socketManager.initPaydata.features.anyPayout.seven * multiplyer).ToString() + "X";
+        SymbolsText[8].text = (socketManager.initPaydata.features.anyPayout.orange * multiplyer).ToString() + "X";
+        SymbolsText[9].text = (socketManager.initPaydata.features.anyPayout.gray * multiplyer).ToString() + "X";
+        SymbolsText[10].text = (socketManager.initPaydata.features.anyPayout.blue * multiplyer).ToString() + "X";
+        SymbolsText[11].text = (socketManager.initPaydata.features.anyPayout.bar * multiplyer).ToString() + "X";
 
         if (Wild_Text) Wild_Text.text = "Substitute any 7 symbol multiplies winnings \n multiplier stack.";
         // for (int i = 0; i < paylines.symbols.Count; i++)

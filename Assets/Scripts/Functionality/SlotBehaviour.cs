@@ -318,7 +318,7 @@ public class SlotBehaviour : MonoBehaviour
         if (LineBet_text) LineBet_text.text = SocketManager.initialData.bets[BetCounter].ToString();
         if (TotalBet_text) TotalBet_text.text = (SocketManager.initialData.bets[BetCounter] * Lines).ToString();
         currentTotalBet = SocketManager.initialData.bets[BetCounter] * Lines;
-
+        uiManager.InitialiseUIData(SocketManager.initUIData.paylines);
     }
 
     private void ChangeBet(bool IncDec)
@@ -343,7 +343,7 @@ public class SlotBehaviour : MonoBehaviour
         if (LineBet_text) LineBet_text.text = SocketManager.initialData.bets[BetCounter].ToString();
         if (TotalBet_text) TotalBet_text.text = (SocketManager.initialData.bets[BetCounter] * Lines).ToString();
         currentTotalBet = SocketManager.initialData.bets[BetCounter] * Lines;
-
+        uiManager.InitialiseUIData(SocketManager.initUIData.paylines);
     }
 
     #region InitialFunctions
