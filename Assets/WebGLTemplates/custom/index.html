@@ -37,9 +37,19 @@
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <script>
     const canvas = document.querySelector("#unity-canvas");
-    let startTime = performance.now(); // Track start time
-    console.log("Start time recorded as:", startTime.toFixed(2), "ms");
-    
+    var unityInstance = null;   // captured on load; jslib listeners use it as a SendMessage fallback
+    var lastProgressSent = -1;
+
+    // Forward loader progress to the host; loading-complete is signalled by Unity's "OnEnter".
+    function sendProgressToPlatform(progressValue) {
+      var percentage = Math.round(progressValue * 100);
+      if (percentage === lastProgressSent) return;
+      lastProgressSent = percentage;
+      if (window.parent) {
+        window.parent.postMessage({ type: "UnityLoaderProgress", progress: percentage }, "*");
+      }
+    }
+    // Pin the canvas to the visible viewport; Unity (OrientationChange) owns aspect ratio & rotation.
     function resizeCanvas() {
       // visualViewport is the accurate visible area on iOS; fall back to innerWidth/Height.
       var vv = window.visualViewport;
@@ -69,8 +79,6 @@
 
     var buildUrl = "Build";
     var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
-    console.log("Loader URL: ", loaderUrl);
-    
     var config = {
       dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
       frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
@@ -92,57 +100,21 @@
       productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
     };
 
-    console.log("Config loaded: ", config);
-
     var script = document.createElement("script");
     script.src = loaderUrl;
-    
     script.onload = () => {
-      console.log("Loader script loaded at:", performance.now().toFixed(2), "ms");
-      let loadStart = performance.now();
       createUnityInstance(canvas, config, (progress) => {
-        console.log("Loading progress: ", progress);
-      }).then((unityInstance) => {
-        let loadEnd = performance.now();
-        console.log("Unity instance initialized in", (loadEnd - loadStart).toFixed(2), "ms");
-        console.log("Total time from script start: ", (loadEnd - startTime).toFixed(2), "ms");
-        
-        // Measure cache load time
-        if ('caches' in window) {
-          console.log("Checking cache at:", performance.now().toFixed(2), "ms");
-          caches.open('unity-cache').then(cache => {
-            let cacheTime = performance.now();
-            console.log("Cache load time:", cacheTime.toFixed(2), "ms");
-            console.log("Start time:", startTime.toFixed(2), "ms");
-            console.log("Time difference from start:", (cacheTime - startTime).toFixed(2), "ms");
-          }).catch(() => {
-            let noCacheTime = performance.now();
-            console.log("Cache not found. Network load time:", noCacheTime.toFixed(2), "ms");
-            console.log("Start time:", startTime.toFixed(2), "ms");
-            console.log("Time difference from start:", (noCacheTime - startTime).toFixed(2), "ms");
-          });
-        }
+        sendProgressToPlatform(progress);
+      }).then((instance) => {
+        unityInstance = instance;
+        resizeCanvas();
       }).catch((message) => {
-        console.error("Unity loading error: ", message);
+        alert(message);
       });
     };
-    
-    script.onerror = () => {
-      console.error("Failed to load Unity loader script");
-    };
-
     document.body.appendChild(script);
-    window.addEventListener('load', () => {
-      console.log("Page fully loaded at:", performance.now().toFixed(2), "ms");
-      resizeCanvas();
-    });
   </script>
-  <script>
-    window.addEventListener('beforeunload', () => {
-      console.log("Page unloading. Caching Unity data...");
-    });
-  </script>
-
+  <!-- Inbound host messages (TokenReceived) are handled by CustomJsLib.jslib, registered from C#. -->
   <script>
     window.focus();
   </script>
