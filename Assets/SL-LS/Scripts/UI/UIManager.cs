@@ -175,14 +175,14 @@ public class UIManager : MonoBehaviour
     private SocketIOManager socketManager;
 
     [SerializeField]
-    internal JSFunctCalls JSManager;
+    private JSFunctCalls JSManager;
 
     private bool isMusic = true;
     private bool isSound = true;
     private bool isExit = false;
     private Tween WinPopupTextTween;
     private Tween ClosePopupTween;
-    internal int FreeSpins;
+    private int FreeSpins;
 
     [SerializeField]
     internal GameObject RaycastBlocker;
@@ -308,7 +308,7 @@ public class UIManager : MonoBehaviour
         OpenPopup(LBPopup_Object);
     }
 
-    internal void DisconnectionPopup(bool isReconnection)
+    private void DisconnectionPopup(bool isReconnection)
     {
         if (!isExit)
         {

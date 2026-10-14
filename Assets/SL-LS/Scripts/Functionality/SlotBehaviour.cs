@@ -17,7 +17,7 @@ public class SlotBehaviour : MonoBehaviour
     [SerializeField]
     private List<SlotImage> images;     //class to store total images
     [SerializeField]
-    internal List<SlotImage> Tempimages;     //class to store the result matrix
+    private List<SlotImage> Tempimages;     //class to store the result matrix
 
     [Header("Slots Elements")]
     [SerializeField]
@@ -109,7 +109,7 @@ public class SlotBehaviour : MonoBehaviour
     private Coroutine FreeSpinRoutine = null;
     private Coroutine tweenroutine;
     private Tween BalanceTween;
-    internal bool IsAutoSpin = false;
+    private bool IsAutoSpin = false;
     private bool IsSpinning = false;
     private bool CheckSpinAudio = false;
     internal bool CheckPopups = false;
@@ -123,7 +123,7 @@ public class SlotBehaviour : MonoBehaviour
     private bool StopSpinToggle;
     private float SpinDelay = 0.2f;
     internal bool IsTurboOn;
-    internal bool WasAutoSpinOn;
+    private bool WasAutoSpinOn;
     internal bool IsHoldSpin;
     internal bool LinesAnimDone;
     internal bool skipImageAnimation;
@@ -623,12 +623,12 @@ public class SlotBehaviour : MonoBehaviour
 
     }
 
-    internal void CheckWinPopups()
+    private void CheckWinPopups()
     {
         CheckPopups = false;
     }
 
-    public static List<int> ExtractFirstNumbers(List<string> positions)
+    private static List<int> ExtractFirstNumbers(List<string> positions)
     {
         List<int> result = new List<int>();
 
@@ -728,7 +728,7 @@ public class SlotBehaviour : MonoBehaviour
     }
 
 
-    internal void playwinAnimations()
+    private void playwinAnimations()
     {
 
     }

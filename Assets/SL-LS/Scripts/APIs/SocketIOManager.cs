@@ -28,7 +28,7 @@ public class SocketIOManager : MonoBehaviour
   internal Root resultData = null;
   internal Player playerdata = null;
   [SerializeField]
-  internal List<string> bonusdata = null;
+  private List<string> bonusdata = null;
   //WebSocket currentSocket = null;
   internal bool isResultdone = false;
   // protected string nameSpace="game"; //BackendChanges
@@ -46,12 +46,12 @@ public class SocketIOManager : MonoBehaviour
   private string testToken;
 
   protected string gameID = "SL-LS";
-  [SerializeField] internal JSFunctCalls JSManager;
+  [SerializeField] private JSFunctCalls JSManager;
   //protected string gameID = "";
 
-  internal bool isLoaded = false;
+  private bool isLoaded = false;
 
-  internal bool SetInit = false;
+  private bool SetInit = false;
 
   private const int maxReconnectionAttempts = 6;
   private readonly TimeSpan reconnectionDelay = TimeSpan.FromSeconds(10);
@@ -503,7 +503,7 @@ public class SocketIOManager : MonoBehaviour
 #endif
   } //Back2 end
 
-  internal void closeSocketReactnativeCall()
+  private void closeSocketReactnativeCall()
   {
     isExiting = true;
 #if UNITY_WEBGL && !UNITY_EDITOR

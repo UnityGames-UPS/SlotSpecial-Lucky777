@@ -28,7 +28,8 @@ public class PayoutCalculation : MonoBehaviour
     GameObject TempObj = null;
     bool continueLinePath;
     List<Coroutine> linePath = new List<Coroutine>();
-    public SlotBehaviour slotmanager;
+    [SerializeField]
+    private SlotBehaviour slotmanager;
 
     //generate lines at runtime accordingly
     internal void generateLinesAnim(List<int> y_index)
